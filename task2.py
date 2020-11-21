@@ -32,23 +32,21 @@ LETTERS = {}
 try:
     with open(BOOK_FILE, READ_MODE, encoding=ENCODING) as content:
         for character in content:
-            print(character)
-            for letter in line:
-                print(letter)
-                # Ensure each letter encountered is converted to lower case letters
+            # Ensure each letter encountered is converted to lower case letters
+            for letter in character:
                 letter = letter.lower()
                 # If the letter is not in list, add it only if between letters 'a' - 'z' or 97 - 122
                 if letter not in LETTERS and ord(letter) >= ord('a') and ord(letter) <= ord('z'):
                     LETTERS[letter] = 1
                 else:
-                    LETTERS[letter] += 1
-    # print(LETTERS)
+                    if letter in LETTERS and ord(letter) >= ord('a') and ord(letter) <= ord('z'):
+                        LETTERS[letter] += 1
+    
     SORTED_LETTERS = sorted(LETTERS.items())
     SUMMARY_FILE = 'summary.txt'
     WRITE_MODE = 'w'
     with open(SUMMARY_FILE, WRITE_MODE) as text:
         for letter, count in SORTED_LETTERS:
-            text.write(f'{letter}\n')
             text.write(f'{letter.upper()} {count}\n')
         if len(SORTED_LETTERS) == 26:
             text.write(f'It does have all letters')
